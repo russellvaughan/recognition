@@ -4,16 +4,47 @@
 <% end %>
 
 <% if @text_response  %>
-<%= @text_response.text_detections.each do | text | %>
-    <p>-----------</p>
-    <p><b> Line: </b> <%= text.detected_text %> </p>
-<% end %>
+
+<table class="table">
+  <thead>
+  <tr>
+  <th>Line</th>
+  <th>Copy</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% num = 1 %>
+  <% @text_response.text_detections.each do | text | %>  
+    <tr>
+      <td>Line: <%= num %></td>
+      <td><%= text.detected_text %></td>
+   </tr>
+   <% num += 1 %>
+   <% end %>
+
+  </tbody>
+
+</table>
+
+
+
 <% end %> 
 
 <% if @text_response  %>
-    <% @label_response.labels.each do | label | %>
-        <p>-----------</p>
-        <p><b> Label: </b> <%= label.name %> </p>
-        <p><b> Confidence: </b> <%= label.confidence %> </p>
-    <% end %>
+<table class="table">
+<thead>
+<tr>
+  <th>Label</th>
+  <th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+  <%  @label_response.labels.each do | label | %>  
+ <tr>
+    <td><%= label.name %></td>
+  <td><%= label.confidence %></td>
+ </tr>
 <% end %>
+
+  </tbody>
+  <% end %>
