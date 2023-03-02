@@ -6,6 +6,7 @@ require 'rest_client'
 require 'aws-sdk'
 
 class HomeController < ApplicationController
+    skip_before_action :verify_authenticity_token  
 
 
     def index 
@@ -22,9 +23,9 @@ class HomeController < ApplicationController
             client = Aws::Rekognition::Client.new region: ENV['aws_region'], credentials: credentials
             photo = file_name
     
-            path = File.expand_path("public/uploads/#{photo}") # expand path relative to the current directory
-            file = File.read(path)
-            if(File.zero?(path))
+            @path = File.expand_path("public/uploads/#{photo}") # expand path relative to the current directory
+            file = File.read(@path)
+            if(File.zero?(@path))
                 @result = {}
                 return 
             end 
@@ -37,7 +38,7 @@ class HomeController < ApplicationController
             @text_response = client.detect_text(attrs)
             @label_response = client.detect_labels(attrs)
 
-            render "index"
+            render "show"
         end
     end 
 

@@ -1,0 +1,51 @@
+<div style="padding: 100px;">
+
+<% if @text_response &&  !@text_response[0].empty? %>
+<h2>Text Extraction</h2>
+
+<table class="table table-bordered table-condensed">
+  <thead class="thead-dark">
+  <tr>
+  <th scope="col">Line</th>
+  <th scope="col">Copy</th>
+  <th scope="col">Confidence</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% num = 1 %>
+  <% @text_response.text_detections.each do | text | %>  
+    <tr>
+      <td scope="row">Line: <%= num %></td>
+      <td scope="row"><%= text.detected_text %></td>
+      <td scope="row"><%= text.confidence %></td>
+   </tr>
+   <% num += 1 %>
+   <% end %>
+
+  </tbody>
+
+</table>
+
+<% end %> 
+
+<% if @label_response  %>
+<h2>Image Extraction</h2>
+
+<table class="table">
+<thead>
+<tr>
+  <th>Label</th>
+  <th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+  <%  @label_response.labels.each do | label | %>  
+ <tr>
+    <td><%= label.name %></td>
+  <td><%= label.confidence %></td>
+ </tr>
+<% end %>
+
+  </tbody>
+  <% end %>
+  </div>

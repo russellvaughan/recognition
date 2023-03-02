@@ -1,50 +1,26 @@
-<%= form_tag "/home/upload_picture", method: :post, multipart: true, class: 'mt-5' do %>
-    <%= file_field_tag :image_file_data %>
+
+<div class="container col-md-6">
+<%= form_tag "/home/upload_picture", method: :post, multipart: true, class: 'form-group' do %>
+    <%= file_field_tag :image_file_data, class: "form-control", onChange: "preview()" %>
     <%= submit_tag 'Upload', class: 'btn btn-primary' %>
 <% end %>
 
-<% if @text_response  %>
-
-<table class="table">
-  <thead>
-  <tr>
-  <th>Line</th>
-  <th>Copy</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% num = 1 %>
-  <% @text_response.text_detections.each do | text | %>  
-    <tr>
-      <td>Line: <%= num %></td>
-      <td><%= text.detected_text %></td>
-   </tr>
-   <% num += 1 %>
-   <% end %>
-
-  </tbody>
-
-</table>
+<img id="frame" src="" class="img-fluid"  />
 
 
+</div>
 
-<% end %> 
 
-<% if @text_response  %>
-<table class="table">
-<thead>
-<tr>
-  <th>Label</th>
-  <th>Confidence</th>
-</tr>
-</thead>
-<tbody>
-  <%  @label_response.labels.each do | label | %>  
- <tr>
-    <td><%= label.name %></td>
-  <td><%= label.confidence %></td>
- </tr>
-<% end %>
+        <script>
+            function preview() {
+                frame.src = URL.createObjectURL(event.target.files[0]);
+            }
+            function clearImage() {
+                document.getElementById('formFile').value = null;
+                frame.src = "";
+                frame.height = "250"
+                frame.width = "250"
+            }
+        </script>
 
-  </tbody>
-  <% end %>
+
