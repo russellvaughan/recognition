@@ -22,7 +22,7 @@ class HomeController < ApplicationController
             credentials = Aws::Credentials.new(ENV['aws_client_id'], ENV['aws_client_secret'])
             client = Aws::Rekognition::Client.new region: ENV['aws_region'], credentials: credentials
             photo = file_name
-    
+            @photo_path = "/uploads/#{file_name}"
             @path = File.expand_path("public/uploads/#{photo}") # expand path relative to the current directory
             file = File.read(@path)
             if(File.zero?(@path))
